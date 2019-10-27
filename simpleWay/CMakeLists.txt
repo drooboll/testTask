@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.13)
-project(2gisSimple)
+cmake_minimum_required(VERSION 3.5)
+project(test-simple)
 
 set(CMAKE_CXX_STANDARD 14)
 
