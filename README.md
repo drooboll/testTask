@@ -11,15 +11,15 @@ Complex one is more OOP-like, its features are described below:
 Simple one is just simple :)
 It has no additional features (only that features that described in task).
 
-## Arguments
+### Program arguments
 Both programs do have arguments, described bellow:
-- -f <file>; specifies filename/path to file;
-- -m <mode>; specifies work mode; 'words' for words counting (specified by -v flag), or 'checksum' to calc checksum;
-- -v <word>; specifies a word to count in file;
+- -f &lt;file&gt;; specifies filename/path to file;
+- -m &lt;mode&gt;; specifies work mode; 'words' for words counting (specified by -v flag), or 'checksum' to calc checksum;
+- -v &lt;word&gt;; specifies a word to count in file;
 - -h prints help.
 
 Complex one has additional -a flag. Its value could be 'SUM', 'HEX', 'CRC32' to specify checksum algorithm when in 'checksum mode'.
 Also there's a *long-help* flag, --help. Works absolutely like -h flag.
 
-## Bugs
-- *<file>*, *<mode>*, *<word>* cannot starts with '-' symbol :(
+### Bugs
+- *&lt;file&gt;*, *&lt;mode&gt;*, *&lt;word&gt;* cannot starts with '-' symbol :(
