@@ -18,7 +18,7 @@ Both programs do have arguments, described bellow:
 - -v &lt;word&gt;; specifies a word to count in file;
 - -h prints help.
 
-Complex one has additional -a flag. Its value could be 'SUM', 'HEX', 'CRC32' to specify checksum algorithm when in 'checksum mode'.
+Complex one has additional -a flag. Its value could be 'SUM', 'HEX', 'CRC32' to specify checksum algorithm when in 'checksum 'mode. If there's no flag or it's not set, 'SUM' algorithm will be used.
 Also there's a *long-help* flag, --help. Works absolutely like -h flag.
 
 ### Bugs
