@@ -41,3 +41,7 @@ std::string ConsoleParser::getProgramName() {
     return opts[0];
 }
 
+ConsoleParser::~ConsoleParser() {
+    this->opts.clear();
+}
+

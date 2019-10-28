@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <memory>
 
 #include "ConsoleParser.h"
 
@@ -24,7 +25,7 @@ void printSumError(){
 
 
 int main(int argc, char** argv) {
-    auto cp = new ConsoleParser(argc, argv);
+    std::unique_ptr<ConsoleParser> cp(new ConsoleParser(argc, argv));
     if (cp->optExists("-h")){
         printHelp();
     } else {
@@ -51,6 +52,7 @@ int main(int argc, char** argv) {
                                         }
                                     }
                                     std::cout << count << std::endl;
+                                    file.close();
                                 } else {
                                     printFileNotFound(filename);
                                 }
@@ -73,6 +75,7 @@ int main(int argc, char** argv) {
                                     return -1;
                                 }
                                 std::cout << hash << std::endl;
+                                file.close();
                             } else {
                                 printFileNotFound(filename);
                             }
@@ -80,6 +83,8 @@ int main(int argc, char** argv) {
                             printIncomplete();
                         }
                     }
+                } else {
+                    printIncomplete();
                 }
             } else {
                 printIncomplete();
