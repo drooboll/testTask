@@ -6,7 +6,7 @@
 Counter::Counter(std::shared_ptr<ConsoleParser> cp, std::shared_ptr<Options> op): count(0), Worker(cp, op){
     if (cp->optExists(op->flags[op->FILE_FLAG])) {
         std::string filename = cp->getOptValue(op->flags[op->FILE_FLAG]);
-        file = new std::ifstream(filename, std::ofstream::in);
+        file = std::ifstream(filename, std::ofstream::in);
         if (!file)
             error = 2;
     } else {
@@ -25,15 +25,16 @@ bool Counter::work() {
         } else {
             return false;
         }
-    } else
+    } else {
         return false;
+    }
     bool ret = true;
     if (!needle.empty()){
         std::string line;
         size_t index;
-        while(file->good()) {
+        while(file.good()) {
             index = 0;
-            std::getline(*(file), line);
+            std::getline(file, line);
             while((index = line.find(needle, index)) != std::string::npos) {
                 index += needle.length();
                 count++;
@@ -42,7 +43,7 @@ bool Counter::work() {
     } else {
         ret = false;
     }
-    file->close();
+    file.close();
     return ret;
 }
 

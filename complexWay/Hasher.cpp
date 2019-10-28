@@ -3,7 +3,7 @@
 Hasher::Hasher(std::shared_ptr<ConsoleParser> cp, std::shared_ptr<Options> op): Worker(cp, op){
     if (cp->optExists(op->flags[op->FILE_FLAG])) {
         std::string filename = cp->getOptValue(op->flags[op->FILE_FLAG]);
-        file = new std::ifstream(filename, std::ofstream::in);
+        file = std::ifstream(filename, std::ofstream::in);
         if (!file)
             error = 2;
     } else {
@@ -12,11 +12,11 @@ Hasher::Hasher(std::shared_ptr<ConsoleParser> cp, std::shared_ptr<Options> op): 
 }
 bool Hasher::_calcSUM() {
     uint32_t word;
-    while(*file >> word){
+    while(file >> word){
         // What should be done if hash overflows?
         hash += word;
     }
-    if (!file->eof()){
+    if (!file.eof()){
         Worker::error = 3;
         return false;
     }
@@ -25,10 +25,10 @@ bool Hasher::_calcSUM() {
 
 bool Hasher::_calcXOR() {
     uint32_t word;
-    while(*file >> word){
+    while(file >> word){
         hash ^= word;
     }
-    if (!file->eof()){
+    if (!file.eof()){
         Worker::error = 3;
         return false;
     }
@@ -55,10 +55,10 @@ bool Hasher::_calcCRC() {
     uint32_t crc = 0xFFFFFFFF;
 
     char symbol;
-    while(file->get(symbol)){
+    while(file.get(symbol)){
         crc = crc_table[(crc ^ symbol) & 0xFF] ^ (crc >> 8);
     }
-    if (!file->eof()){
+    if (!file.eof()){
         Worker::error = 3;
         return false;
     }
@@ -67,8 +67,9 @@ bool Hasher::_calcCRC() {
 }
 
 bool Hasher::work() {
-    if (Worker::error != 0)
+    if (Worker::error != 0){
         return false;
+    }
     if (cp->optExists(op->flags[op->MODE_FLAG])){
         if(cp->getOptValue(op->flags[op->MODE_FLAG]) == op->modes[op->HASH_MODE]){
             if (cp->optExists(op->flags[op->ALGO_FLAG])){
@@ -100,7 +101,7 @@ bool Hasher::work() {
                 }
             }
             bool retVal = _calcSUM();
-            file->close();
+            file.close();
             return retVal;
         }
     }

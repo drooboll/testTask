@@ -7,7 +7,7 @@
 
 class Hasher: public Worker{
 private:
-    std::ifstream* file;
+    std::ifstream file;
     uint32_t hash = 0;
     bool _calcCRC();
     bool _calcXOR();
