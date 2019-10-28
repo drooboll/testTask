@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.13)
-project(2gisSimple)
+cmake_minimum_required(VERSION 3.5)
+project(task-simple)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(2gisSimple main.cpp ConsoleParser.cpp ConsoleParser.h)
+add_executable(task-simple main.cpp ConsoleParser.cpp ConsoleParser.h)
