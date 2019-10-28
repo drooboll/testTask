@@ -14,6 +14,7 @@ private:
 
 public:
     ConsoleParser(int argc, char** argv);
+    ~ConsoleParser();
 
     bool optExists(std::string& option);
 

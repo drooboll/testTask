@@ -4,13 +4,15 @@
 #include "ConsoleParser.h"
 #include "Options.h"
 #include "Worker.h"
+#include <memory>
 
 class Executor{
 private:
-    Options op;
-    std::vector<Worker*> workers;
+    std::shared_ptr<Options> op;
+    std::vector<std::shared_ptr<Worker>> workers;
 public:
-    explicit Executor(ConsoleParser& cp);
+    explicit Executor(std::shared_ptr<ConsoleParser> cp);
+    ~Executor();
     void startChain();
 };
 

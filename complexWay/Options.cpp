@@ -2,6 +2,7 @@
 // Created by valery on 26.10.19.
 //
 
+#include <iostream>
 #include "Options.h"
 
 Options::Options() {
@@ -25,4 +26,11 @@ Options::Options() {
     algorithms.insert(std::make_pair(SUM, std::string("SUM")));
     algorithms.insert(std::make_pair(XOR, std::string("XOR")));
     algorithms.insert(std::make_pair(CRC32, std::string("CRC32")));
+}
+
+Options::~Options() {
+    flags.clear();
+    flagAdditions.clear();
+    modes.clear();
+    algorithms.clear();
 }

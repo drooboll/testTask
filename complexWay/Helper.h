@@ -5,7 +5,7 @@
 
 class Helper: public Worker{
 public:
-    Helper(ConsoleParser& cp, Options& op): Worker(cp, op){}
+    Helper(std::shared_ptr<ConsoleParser> cp, std::shared_ptr<Options> op): Worker(cp, op){}
     bool work() override;
 };
 

@@ -6,17 +6,19 @@
 #include "Helper.h"
 
 
-Executor::Executor(ConsoleParser &cp) {
+Executor::Executor(const std::shared_ptr<ConsoleParser> cp) {
+    op = std::shared_ptr<Options>(new Options);
     // Creating kind of a chain
-    workers.push_back((Worker*) new Helper(cp, op));
-    workers.push_back((Worker*) new Counter(cp, op));
-    workers.push_back((Worker*) new Hasher(cp, op));
+    workers.push_back(std::shared_ptr<Worker>(new Helper(cp, op)));
+    workers.push_back(std::shared_ptr<Worker>(new Counter(cp, op)));
+    workers.push_back(std::shared_ptr<Worker>(new Hasher(cp, op)));
     // Default option
-    workers.push_back(new Worker(cp, op));
+    workers.push_back(std::shared_ptr<Worker>(new Worker(cp, op)));
 }
 
 void Executor::startChain() {
-    for (auto worker: workers){
+    for (auto iterator = workers.begin(); iterator < workers.end(); ++iterator){
+        auto worker = iterator->get();
         bool complete = worker->work();
         if (complete){
             worker->printResult();
@@ -28,4 +30,8 @@ void Executor::startChain() {
             }
         }
     }
+}
+
+Executor::~Executor() {
+    this->workers.clear();
 }
