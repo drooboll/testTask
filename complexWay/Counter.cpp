@@ -3,9 +3,9 @@
 
 #include "Counter.h"
 
-Counter::Counter(ConsoleParser &cp, Options &op): count(0), Worker(cp, op){
-    if (cp.optExists(op.flags[op.FILE_FLAG])) {
-        std::string filename = cp.getOptValue(op.flags[op.FILE_FLAG]);
+Counter::Counter(std::shared_ptr<ConsoleParser> cp, std::shared_ptr<Options> op): count(0), Worker(cp, op){
+    if (cp->optExists(op->flags[op->FILE_FLAG])) {
+        std::string filename = cp->getOptValue(op->flags[op->FILE_FLAG]);
         file = new std::ifstream(filename, std::ofstream::in);
         if (!file)
             error = 2;
@@ -52,4 +52,8 @@ int Counter::getResult() {
 
 void Counter::printResult() {
     std::cout << count << std::endl;
+}
+
+void Counter::printErrorCause() {
+    Worker::printErrorCause();
 }

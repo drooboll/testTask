@@ -2,9 +2,12 @@
 #include <fstream>
 #include "Worker.h"
 
-Worker::Worker(ConsoleParser &cp, Options &op) {
-    this->cp = &cp;
-    this->op = &op;
+Worker::Worker(std::shared_ptr<ConsoleParser> cp, std::shared_ptr<Options> op) {
+    this->cp = cp;
+    this->op = op;
+}
+
+Worker::~Worker(){
 }
 
 bool Worker::work() {

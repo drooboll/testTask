@@ -1,8 +1,8 @@
 #include "Hasher.h"
 
-Hasher::Hasher(ConsoleParser &cp, Options &op): Worker(cp, op){
-    if (cp.optExists(op.flags[op.FILE_FLAG])) {
-        std::string filename = cp.getOptValue(op.flags[op.FILE_FLAG]);
+Hasher::Hasher(std::shared_ptr<ConsoleParser> cp, std::shared_ptr<Options> op): Worker(cp, op){
+    if (cp->optExists(op->flags[op->FILE_FLAG])) {
+        std::string filename = cp->getOptValue(op->flags[op->FILE_FLAG]);
         file = new std::ifstream(filename, std::ofstream::in);
         if (!file)
             error = 2;

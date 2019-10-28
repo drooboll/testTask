@@ -13,7 +13,7 @@ private:
     bool _calcXOR();
     bool _calcSUM();
 public:
-    Hasher(ConsoleParser& cp, Options& op);
+    Hasher(std::shared_ptr<ConsoleParser> cp, std::shared_ptr<Options> op);
     bool work() override;
     int getResult() override;
     void printResult() override;
