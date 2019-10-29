@@ -6,7 +6,7 @@ There are two solutions:
 Complex one is more OOP-like, its features are described below:
 - Simple addition of *Workers*, like existing *Counter*, *Hasher* or *Helper*.
 - Simple modification of flags (info concentrated in one class / object).
-- Variety of checksum algorithms (simple sum, xor and crc32 (output is equal to **crc32**), implemented in *Hasher*.
+- Variety of checksum algorithms (simple sum, xor and crc32 - output is equal to **crc32**), implemented in *Hasher*.
 - Simple addition of new hashing algotithms.
 
 Simple one is just simple :)
