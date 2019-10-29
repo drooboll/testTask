@@ -6,7 +6,7 @@ There are two solutions:
 Complex one is more OOP-like, its features are described below:
 - Simple addition of *Workers*, like existing *Counter*, *Hasher* or *Helper*.
 - Simple modification of flags (info concentrated in one class / object).
-- Various checksum algorithm (simple sum, xor and crc32 (output is equal to POSIX's chksum)).
+- Various checksum algorithm (simple sum, xor and crc32 (output is equal to **crc32**)).
 
 Simple one is just simple :)
 It has no additional features (only that features that described in task).
