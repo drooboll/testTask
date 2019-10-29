@@ -1,12 +1,10 @@
-#ifndef INC_2GISTASK_OPTIONS_H
-#define INC_2GISTASK_OPTIONS_H
+#pragma once
 
 #include <string>
 #include <map>
 
 struct Options{
-public:
-    enum{
+    enum class flagType{
         FILE_FLAG,
         MODE_FLAG,
         WORD_FLAG,
@@ -15,23 +13,20 @@ public:
         ALGO_FLAG
     };
 
-    enum{
+    enum class modeType{
         WORD_MODE,
         HASH_MODE
     };
 
-    enum{
+    enum class algoType{
         CRC32,
         SUM,
         XOR
     };
-    std::map<int, std::string> flags;
-    std::map<int, std::string> flagAdditions;
-    std::map<int, std::string> modes;
-    std::map<int, std::string> algorithms;
+    std::map<flagType, std::string> flags;
+    std::map<flagType, std::string> flagAdditions;
+    std::map<modeType, std::string> modes;
+    std::map<algoType, std::string> algorithms;
     Options();
-    ~Options();
+    ~Options() = default;
 };
-
-
-#endif //INC_2GISTASK_OPTIONS_H

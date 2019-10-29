@@ -1,13 +1,9 @@
 #include "Hasher.h"
 
 Hasher::Hasher(std::shared_ptr<ConsoleParser> cp, std::shared_ptr<Options> op): Worker(cp, op){
-    if (cp->optExists(op->flags[op->FILE_FLAG])) {
-        std::string filename = cp->getOptValue(op->flags[op->FILE_FLAG]);
+    if (cp->optExists(op->flags[Options::flagType::FILE_FLAG])) {
+        std::string filename = cp->getOptValue(op->flags[Options::flagType::FILE_FLAG]);
         file = std::ifstream(filename, std::ofstream::in);
-        if (!file)
-            error = 2;
-    } else {
-        error = 1;
     }
 }
 bool Hasher::_calcSUM() {
@@ -17,9 +13,9 @@ bool Hasher::_calcSUM() {
         hash += word;
     }
     if (!file.eof()){
-        Worker::error = 3;
-        return false;
+        throw std::runtime_error("There are not only integers in file");
     }
+    file.close();
     return true;
 }
 
@@ -29,9 +25,9 @@ bool Hasher::_calcXOR() {
         hash ^= word;
     }
     if (!file.eof()){
-        Worker::error = 3;
-        return false;
+        throw std::runtime_error("There are not only integers in file");
     }
+    file.close();
     return true;
 }
 
@@ -59,68 +55,44 @@ bool Hasher::_calcCRC() {
         crc = crc_table[(crc ^ symbol) & 0xFF] ^ (crc >> 8);
     }
     if (!file.eof()){
-        Worker::error = 3;
-        return false;
+        throw std::runtime_error("There are not only integers in file");
     }
+    file.close();
     hash =  crc ^ 0xFFFFFFFF;
     return true;
 }
 
 bool Hasher::work() {
-    if (Worker::error != 0){
+    if (!file)
+        throw std::runtime_error("File not specified");
+    if (!cp->optExists(op->flags[Options::flagType::MODE_FLAG])){
         return false;
     }
-    if (cp->optExists(op->flags[op->MODE_FLAG])){
-        if(cp->getOptValue(op->flags[op->MODE_FLAG]) == op->modes[op->HASH_MODE]){
-            if (cp->optExists(op->flags[op->ALGO_FLAG])){
-                std::string algorithm = cp->getOptValue(op->flags[op->ALGO_FLAG]);
-                if (!algorithm.empty()){
-                    bool retVal = false;
-                    for (auto algo: op->algorithms){
-                        if (algo.second == algorithm){
-                            if (algo.first == op->SUM){
-                                retVal = _calcSUM();
-                                break;
-                            }
-                            if (algo.first == op->XOR){
-                                retVal = _calcXOR();
-                                break;
-                            }
-                            if (algo.first == op->CRC32){
-                                retVal = _calcCRC();
-                                break;
-                            }
-
-                        }
+    if(cp->getOptValue(op->flags[Options::flagType::MODE_FLAG]) != op->modes[Options::modeType::HASH_MODE]){
+        return false;
+    }
+    if (cp->optExists(op->flags[Options::flagType::ALGO_FLAG])){
+        std::string algorithm = cp->getOptValue(op->flags[Options::flagType::ALGO_FLAG]);
+        if (!algorithm.empty()){
+            for (auto& algo: op->algorithms){
+                if (algo.second == algorithm){
+                    if (algo.first == Options::algoType::SUM){
+                        return _calcSUM();
                     }
-                    if (!retVal){
-                        error = 3;
-                        return false;
-                    } else
-                        return true;
+                    if (algo.first == Options::algoType::XOR){
+                        return _calcXOR();
+                    }
+                    if (algo.first == Options::algoType::CRC32){
+                        return _calcCRC();
+                    }
                 }
             }
-            bool retVal = _calcSUM();
-            file.close();
-            return retVal;
         }
     }
-    return false;
-}
-
-int Hasher::getResult() {
-    return hash;
+    return _calcSUM();
 }
 
 void Hasher::printResult(){
     if (!Worker::error)
         std::cout << hash << std::endl;
-}
-
-void Hasher::printErrorCause() {
-    if (Worker::error != 3){
-        Worker::printErrorCause();
-    } else {
-        std::cerr << "File consists not only of integers, aborting." << std::endl;
-    }
 }

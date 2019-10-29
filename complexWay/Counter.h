@@ -1,8 +1,7 @@
-#ifndef INC_2GISTASK_COUNTER_H
-#define INC_2GISTASK_COUNTER_H
+#pragma once
 
-#include "Worker.h"
 #include <fstream>
+#include "Worker.h"
 
 class Counter: public Worker{
 private:
@@ -12,10 +11,5 @@ private:
 public:
     Counter(std::shared_ptr<ConsoleParser> cp, std::shared_ptr<Options> op);
     bool work() override;
-    int getResult() override;
     void printResult() override;
-    void printErrorCause() override;
 };
-
-
-#endif //INC_2GISTASK_COUNTER_H

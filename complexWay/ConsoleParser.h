@@ -1,6 +1,6 @@
-#ifndef INC_2GISTASK_CONSOLEPARSER_H
-#define INC_2GISTASK_CONSOLEPARSER_H
+#pragma once
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -10,22 +10,14 @@ class ConsoleParser{
 private:
     std::vector<std::string> opts;
 
-    auto _getIterator(std::string& option);
-
+    auto _getIterator(const std::string& option) const;
 public:
     ConsoleParser(int argc, char** argv);
-    ~ConsoleParser();
+    ~ConsoleParser() = default;
 
-    bool optExists(std::string& option);
+    bool optExists(const std::string& option) const;
 
-    bool optExists(const char* option);
-
-    std::string getOptValue(std::string& option);
-
-    std::string getOptValue(const char* option);
+    std::string getOptValue(const std::string& option) const;
 
     std::string getProgramName();
 };
-
-
-#endif //INC_2GISTASK_CONSOLEPARSER_H

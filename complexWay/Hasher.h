@@ -1,5 +1,4 @@
-#ifndef INC_2GISTASK_HASHER_H
-#define INC_2GISTASK_HASHER_H
+#pragma once
 
 #include "Worker.h"
 #include <fstream>
@@ -15,10 +14,5 @@ private:
 public:
     Hasher(std::shared_ptr<ConsoleParser> cp, std::shared_ptr<Options> op);
     bool work() override;
-    int getResult() override;
     void printResult() override;
-    void printErrorCause() override;
 };
-
-
-#endif //INC_2GISTASK_HASHER_H

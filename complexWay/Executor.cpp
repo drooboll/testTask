@@ -19,15 +19,14 @@ Executor::Executor(const std::shared_ptr<ConsoleParser> cp) {
 void Executor::startChain() {
     for (auto iterator = workers.begin(); iterator < workers.end(); ++iterator){
         auto worker = iterator->get();
-        bool complete = worker->work();
-        if (complete){
-            worker->printResult();
-            break;
-        } else {
-            if (worker->getError() != 0){
-                worker->printErrorCause();
+        try{
+            if (worker->work()){
+                worker->printResult();
                 break;
             }
+        } catch (std::runtime_error& e){
+            std::cerr << e.what() << std::endl;
+            break;
         }
     }
 }

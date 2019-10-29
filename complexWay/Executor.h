@@ -1,5 +1,4 @@
-#ifndef INC_2GISTASK_EXECUTOR_H
-#define INC_2GISTASK_EXECUTOR_H
+#pragma once
 
 #include "ConsoleParser.h"
 #include "Options.h"
@@ -15,6 +14,3 @@ public:
     ~Executor();
     void startChain();
 };
-
-
-#endif //INC_2GISTASK_EXECUTOR_H

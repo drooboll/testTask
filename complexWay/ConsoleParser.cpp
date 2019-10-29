@@ -1,7 +1,6 @@
-#include <iostream>
 #include "ConsoleParser.h"
 
-auto ConsoleParser::_getIterator(std::string &option) {
+auto ConsoleParser::_getIterator(const std::string &option) const {
     return std::find(opts.begin(), opts.end(), option);
 }
 
@@ -12,17 +11,12 @@ ConsoleParser::ConsoleParser(int argc, char **argv) {
     }
 }
 
-bool ConsoleParser::optExists(std::string &option) {
+bool ConsoleParser::optExists(const std::string &option) const{
     auto iterator = _getIterator(option);
     return iterator != opts.end();
 }
 
-bool ConsoleParser::optExists(const char *option) {
-    std::string stringOpt = std::string(option);
-    return optExists(stringOpt);
-}
-
-std::string ConsoleParser::getOptValue(std::string &option) {
+std::string ConsoleParser::getOptValue(const std::string &option) const {
     auto iterator = _getIterator(option);
     if (iterator != opts.end() && ++iterator != opts.end()){
         if ((*iterator)[0] != '-')
@@ -33,17 +27,7 @@ std::string ConsoleParser::getOptValue(std::string &option) {
     return emptyStr;
 }
 
-std::string ConsoleParser::getOptValue(const char* option) {
-    std::string stringOpt = std::string(option);
-    return getOptValue(stringOpt);
-}
-
 std::string ConsoleParser::getProgramName() {
     return opts[0];
 }
-
-ConsoleParser::~ConsoleParser() {
-    this->opts.clear();
-}
-
 
