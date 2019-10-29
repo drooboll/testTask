@@ -1,3 +1,4 @@
+#include <iostream>
 #include "ConsoleParser.h"
 
 auto ConsoleParser::_getIterator(std::string &option) {
@@ -40,4 +41,9 @@ std::string ConsoleParser::getOptValue(const char* option) {
 std::string ConsoleParser::getProgramName() {
     return opts[0];
 }
+
+ConsoleParser::~ConsoleParser() {
+    this->opts.clear();
+}
+
 

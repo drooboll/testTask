@@ -3,16 +3,17 @@
 
 #include "Worker.h"
 
-class Counter: Worker{
+class Counter: public Worker{
 private:
     std::ifstream* file;
     int count;
     std::string needle;
 public:
-    Counter(ConsoleParser& cp, Options& op);
+    Counter(std::shared_ptr<ConsoleParser> cp, std::shared_ptr<Options> op);
     bool work() override;
     int getResult() override;
     void printResult() override;
+    void printErrorCause() override;
 };
 
 

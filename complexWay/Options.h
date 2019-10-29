@@ -30,6 +30,7 @@ public:
     std::map<int, std::string> modes;
     std::map<int, std::string> algorithms;
     Options();
+    ~Options();
 };
 
 
