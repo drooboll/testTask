@@ -3,4 +3,4 @@ project(task-simple)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(task-simple main.cpp ConsoleParser.cpp ConsoleParser.h)
+add_executable(task-simple main.cpp ConsoleParser.cpp Executor.h Executor.cpp ConsoleParser.h)
